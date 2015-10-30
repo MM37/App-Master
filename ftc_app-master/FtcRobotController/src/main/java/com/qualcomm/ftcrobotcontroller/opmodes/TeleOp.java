@@ -11,7 +11,7 @@ import static java.lang.Math.abs;
  * Created by rkhaj on 10/9/2015.
  * This is a basic teleop that we are going to use for testing purposes.
  */
-public class PreTeleop extends OpMode {
+public class TeleOp extends OpMode {
 
     /*
     Declares motor variables
@@ -24,7 +24,7 @@ public class PreTeleop extends OpMode {
     DcMotor rbMotor;
     DcMotor armMotor;
 
-    public PreTeleop() {
+    public TeleOp() {
 
     }
 
