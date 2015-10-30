@@ -22,6 +22,7 @@ public class PreTeleop extends OpMode {
     DcMotor lbMotor;
     DcMotor rfMotor;
     DcMotor rbMotor;
+    DcMotor armMotor;
 
     public PreTeleop() {
 
@@ -37,6 +38,7 @@ public class PreTeleop extends OpMode {
         lbMotor = hardwareMap.dcMotor.get("lbMotor");
         rfMotor = hardwareMap.dcMotor.get("rfMotor");
         rbMotor = hardwareMap.dcMotor.get("rbMotor");
+        armMotor = hardwareMap.dcMotor.get("armMotor");
     }
 
     @Override
@@ -47,37 +49,43 @@ public class PreTeleop extends OpMode {
         "Ver"=vertical
         Creates variable for mode
         */
-        float leftVer;
-        float rightVer;
+        float leftLeftVer;
+        float leftRightVer;
+        float rightRightVer;
         String mode;
 
         /*
-        Updates the power variable only if its absolute value is greater than 0.08
-        This prevents the motors from burning out
+        Updates the power variable from the sticks only if its absolute value is greater than 0.08
+        This prevents values from being passed unless someone is actively moving a stick
         */
         if (abs(gamepad1.left_stick_y)>0.08) {
-            leftVer = -gamepad1.left_stick_y;
+            leftLeftVer = -gamepad1.left_stick_y;
         } else {
-            leftVer = 0;
+            leftLeftVer = 0;
         }
         if (abs(gamepad1.right_stick_y)>0.08) {
-            rightVer = gamepad1.right_stick_y;
+            leftRightVer = gamepad1.right_stick_y;
         } else {
-            rightVer = 0;
+            leftRightVer = 0;
+        }
+        if (abs(gamepad2.right_stick_y)>0.08) {
+            rightRightVer = gamepad2.right_stick_y;
+        } else {
+            rightRightVer = 0;
         }
 
         /*
-        Scales gamepad values depending on buttons pressed
+        Scales drivetrain gamepad values depending on buttons pressed
         This allows the driver to have more precision
         Also updates the mode display
         */
         if (gamepad1.left_bumper && gamepad1.right_bumper){
-            leftVer *= 0.2;
-            rightVer *= 0.2;
+            leftLeftVer *= 0.2;
+            leftRightVer *= 0.2;
             mode = "slower";
         } else if (gamepad1.left_bumper) {
-            leftVer *= 0.5;
-            rightVer *= 0.5;
+            leftLeftVer *= 0.5;
+            leftRightVer *= 0.5;
             mode = "slow";
         } else {
             mode = "Regular";
@@ -86,10 +94,17 @@ public class PreTeleop extends OpMode {
         /*
         Updates motor power
         */
-        lfMotor.setPower(leftVer);
-        lbMotor.setPower(leftVer);
-        rfMotor.setPower(rightVer);
-        rbMotor.setPower(rightVer);
+        lfMotor.setPower(leftLeftVer);
+        lbMotor.setPower(leftLeftVer);
+        rfMotor.setPower(leftRightVer);
+        rbMotor.setPower(leftRightVer);
+        if (gamepad2.y) {
+            armMotor.setPower(0.4);
+        } else if (gamepad2.a) {
+            armMotor.setPower(0.4);
+        } else {
+            armMotor.setPower(rightRightVer * (float)0.6); //Scales values to 60% to give operator more control
+        }
 
         /*
         Display:
