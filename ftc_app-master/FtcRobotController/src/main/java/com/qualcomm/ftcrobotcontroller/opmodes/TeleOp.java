@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -43,7 +44,7 @@ public class TeleOp extends OpMode {
 
     @Override
     public void init() {
-
+        armMotor.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
     }
 
     @Override
@@ -108,12 +109,12 @@ public class TeleOp extends OpMode {
         /*
         Updates arm motor power
         */
-        if (gamepad2.y) {
+        if (rightRightVer != 0) {
+            armMotor.setPower(rightRightVer);
+        } else if (gamepad2.y) {
             armMotor.setTargetPosition(ARM_UP_POSITION);
         } else if (gamepad2.a) {
             armMotor.setTargetPosition(ARM_DOWN_POSITION);
-        } else {
-            armMotor.setPower(rightRightVer * (float)0.6); //Scales values to 60% to give operator more control
         }
         /*
         Updates servo motor power
