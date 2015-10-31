@@ -9,17 +9,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by rkhaj on 10/16/2015.
  */
-public class AutonomousRepairZone extends LinearOpMode {
+public class AutonomousRepairZoneRed extends LinearOpMode {
 
     DcMotor lfMotor;
     DcMotor lbMotor;
     DcMotor rfMotor;
     DcMotor rbMotor;
-    Servo zipBlue = hardwareMap.servo.get("zipBlue");
-    Servo zipRed = hardwareMap.servo.get("zipRed");
     Servo climber = hardwareMap.servo.get("climber");
     ColorSensor colorSensor;
-    boolean isRed = true;
 
     public static final int ARM_DOWN_POSITION = 0;
     public static final int ARM_UP_POSITION = 0;
@@ -79,36 +76,23 @@ public class AutonomousRepairZone extends LinearOpMode {
         waitOneFullHardwareCycle();
         waitForStart();
 
-        if (isRed=true) {
-            moveForward(0.75, 1000);
-            turnLeft(0.75, 1000);
-            moveForward(0.75, 1000);
-            turnLeft(0.75, 1000);
-            moveForward(0.75, 1000);
+        moveForward(0.75, 1000);
+        turnLeft(0.75, 1000);
+        moveForward(0.75, 1000);
+        turnLeft(0.75, 1000);
+        moveForward(0.75, 1000);
 
-            if (colorSensor.red() < 100) {
-                turnRight(0.75, 500);
-                moveForward(0.25, 1000);
-                turnLeft(0.75, 500);
-            }
-            moveForward(0.25, 500);
-            sleep(250);
-            moveForward(-0.25, 500);
-        } else {
-            moveForward(0.75, 1000);
-            turnRight(0.75, 1000);
-            moveForward(0.75, 1000);
-            turnRight(0.75, 1000);
-            moveForward(0.75, 1000);
-
-            if (colorSensor.blue() < 100) {
-                turnLeft(0.75, 500);
-                moveForward(0.25, 1000);
-                turnRight(0.75, 500);
-            }
-            moveForward(0.25, 500);
-            sleep(250);
-            moveForward(-0.25, 500);
+        if (colorSensor.red() < 100) {
+            turnRight(0.75, 500);
+            moveForward(0.25, 1000);
+            turnLeft(0.75, 500);
         }
+        moveForward(0.25, 500);
+        sleep(250);
+        moveForward(-0.25, 500);
+        turnLeft(0.75, 500);
+        climber.setPosition(CLIMBER_DOWN_POSITION);
+        sleep(1000);
+        climber.setPosition(CLIMBER_UP_POSITION);
     }
 }

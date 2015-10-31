@@ -44,7 +44,7 @@ public class TeleOp extends OpMode {
 
     @Override
     public void init() {
-        armMotor.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
+
     }
 
     @Override
@@ -110,10 +110,13 @@ public class TeleOp extends OpMode {
         Updates arm motor power
         */
         if (rightRightVer != 0) {
+            armMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
             armMotor.setPower(rightRightVer);
         } else if (gamepad2.y) {
+            armMotor.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
             armMotor.setTargetPosition(ARM_UP_POSITION);
         } else if (gamepad2.a) {
+            armMotor.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
             armMotor.setTargetPosition(ARM_DOWN_POSITION);
         }
         /*

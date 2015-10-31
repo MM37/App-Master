@@ -62,7 +62,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register ("PushBotManual", PushBotManual.class);
 
     manager.register("TeleOp", TeleOp.class);
-    manager.register("AutonomousRepairZone", AutonomousRepairZone.class);
+    manager.register("AutonomousRepairZoneBlue", AutonomousRepairZoneBlue.class);
+    manager.register("AutonomousRepairZoneRed", AutonomousRepairZoneRed.class);
 
     /*
      * Uncomment any of the following lines if you want to register an op mode.
