@@ -17,6 +17,8 @@ public class TeleOp extends OpMode {
     Declares motor variables and creates link to hardware destinations
     first letter: left/right
     second letter: front/back
+
+    Declares values for arm positions
     */
     DcMotor lfMotor = hardwareMap.dcMotor.get("lfMotor");
     DcMotor lbMotor = hardwareMap.dcMotor.get("lbMotor");
@@ -24,11 +26,16 @@ public class TeleOp extends OpMode {
     DcMotor rbMotor = hardwareMap.dcMotor.get("rbMotor");
     DcMotor armMotor = hardwareMap.dcMotor.get("armMotor");
 
-    /*
-    Declares values for arm positions
-     */
+    Servo zipBlue = hardwareMap.servo.get("zipBlue");
+    Servo zipRed = hardwareMap.servo.get("zipRed");
+    Servo climber = hardwareMap.servo.get("climber");
+
     public static final int ARM_DOWN_POSITION = 0;
     public static final int ARM_UP_POSITION = 0;
+    public static final double ZIP_UP_POSITION = 0;
+    public static final double ZIP_DOWN_POSITION = 0;
+    public static final double CLIMBER_UP_POSITION = 0;
+    public static final double CLIMBER_DOWN_POSITION = 0;
 
     public TeleOp() {
 
@@ -92,18 +99,41 @@ public class TeleOp extends OpMode {
         }
 
         /*
-        Updates motor power
+        Updates drive motor power
         */
         lfMotor.setPower(leftLeftVer);
         lbMotor.setPower(leftLeftVer);
         rfMotor.setPower(leftRightVer);
         rbMotor.setPower(leftRightVer);
+        /*
+        Updates arm motor power
+        */
         if (gamepad2.y) {
             armMotor.setTargetPosition(ARM_UP_POSITION);
         } else if (gamepad2.a) {
             armMotor.setTargetPosition(ARM_DOWN_POSITION);
         } else {
             armMotor.setPower(rightRightVer * (float)0.6); //Scales values to 60% to give operator more control
+        }
+        /*
+        Updates servo motor power
+         */
+        if (gamepad1.x) {
+            zipBlue.setPosition(ZIP_DOWN_POSITION);
+        } else {
+            zipBlue.setPosition(ZIP_UP_POSITION);
+        }
+
+        if (gamepad1.b) {
+            zipRed.setPosition(ZIP_DOWN_POSITION);
+        } else {
+            zipRed.setPosition(ZIP_UP_POSITION);
+        }
+
+        if (gamepad2.x) {
+            climber.setPosition(CLIMBER_DOWN_POSITION);
+        } else {
+            climber.setPosition(CLIMBER_UP_POSITION);
         }
 
         /*

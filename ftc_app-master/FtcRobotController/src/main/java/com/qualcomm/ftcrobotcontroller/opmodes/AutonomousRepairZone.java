@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by rkhaj on 10/16/2015.
@@ -14,8 +15,18 @@ public class AutonomousRepairZone extends LinearOpMode {
     DcMotor lbMotor;
     DcMotor rfMotor;
     DcMotor rbMotor;
+    Servo zipBlue = hardwareMap.servo.get("zipBlue");
+    Servo zipRed = hardwareMap.servo.get("zipRed");
+    Servo climber = hardwareMap.servo.get("climber");
     ColorSensor colorSensor;
     boolean isRed = true;
+
+    public static final int ARM_DOWN_POSITION = 0;
+    public static final int ARM_UP_POSITION = 0;
+    public static final double ZIP_UP_POSITION = 0;
+    public static final double ZIP_DOWN_POSITION = 0;
+    public static final double CLIMBER_UP_POSITION = 0;
+    public static final double CLIMBER_DOWN_POSITION = 0;
 
     public void moveForward(double power, long time) throws InterruptedException{
         lfMotor.setPower(power);
