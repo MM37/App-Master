@@ -14,15 +14,21 @@ import static java.lang.Math.abs;
 public class TeleOp extends OpMode {
 
     /*
-    Declares motor variables
+    Declares motor variables and creates link to hardware destinations
     first letter: left/right
     second letter: front/back
     */
-    DcMotor lfMotor;
-    DcMotor lbMotor;
-    DcMotor rfMotor;
-    DcMotor rbMotor;
-    DcMotor armMotor;
+    DcMotor lfMotor = hardwareMap.dcMotor.get("lfMotor");
+    DcMotor lbMotor = hardwareMap.dcMotor.get("lbMotor");
+    DcMotor rfMotor = hardwareMap.dcMotor.get("rfMotor");
+    DcMotor rbMotor = hardwareMap.dcMotor.get("rbMotor");
+    DcMotor armMotor = hardwareMap.dcMotor.get("armMotor");
+
+    /*
+    Declares values for arm positions
+     */
+    public static final int ARM_DOWN_POSITION = 0;
+    public static final int ARM_UP_POSITION = 0;
 
     public TeleOp() {
 
@@ -31,14 +37,6 @@ public class TeleOp extends OpMode {
     @Override
     public void init() {
 
-        /*
-        creates link between variables and hardware destinations
-        */
-        lfMotor = hardwareMap.dcMotor.get("lfMotor");
-        lbMotor = hardwareMap.dcMotor.get("lbMotor");
-        rfMotor = hardwareMap.dcMotor.get("rfMotor");
-        rbMotor = hardwareMap.dcMotor.get("rbMotor");
-        armMotor = hardwareMap.dcMotor.get("armMotor");
     }
 
     @Override
@@ -63,13 +61,15 @@ public class TeleOp extends OpMode {
         } else {
             leftLeftVer = 0;
         }
+
         if (abs(gamepad1.right_stick_y)>0.08) {
-            leftRightVer = gamepad1.right_stick_y;
+            leftRightVer = -gamepad1.right_stick_y;
         } else {
             leftRightVer = 0;
         }
+
         if (abs(gamepad2.right_stick_y)>0.08) {
-            rightRightVer = gamepad2.right_stick_y;
+            rightRightVer = -gamepad2.right_stick_y;
         } else {
             rightRightVer = 0;
         }
@@ -88,7 +88,7 @@ public class TeleOp extends OpMode {
             leftRightVer *= 0.5;
             mode = "slow";
         } else {
-            mode = "Regular";
+            mode = "regular";
         }
 
         /*
@@ -99,9 +99,9 @@ public class TeleOp extends OpMode {
         rfMotor.setPower(leftRightVer);
         rbMotor.setPower(leftRightVer);
         if (gamepad2.y) {
-            armMotor.setPower(0.4);
+            armMotor.setTargetPosition(ARM_UP_POSITION);
         } else if (gamepad2.a) {
-            armMotor.setPower(0.4);
+            armMotor.setTargetPosition(ARM_DOWN_POSITION);
         } else {
             armMotor.setPower(rightRightVer * (float)0.6); //Scales values to 60% to give operator more control
         }
