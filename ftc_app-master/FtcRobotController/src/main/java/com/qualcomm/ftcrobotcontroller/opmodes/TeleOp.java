@@ -136,7 +136,7 @@ public class TeleOp extends OpMode {
 
         if (gamepad2.x) {
             climber.setPosition(CLIMBER_DOWN_POSITION);
-        } else {
+        } else if (gamepad2.b) {
             climber.setPosition(CLIMBER_UP_POSITION);
         }
 
