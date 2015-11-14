@@ -87,9 +87,9 @@ public class TeleOp extends OpMode {
         }
 
         if (abs(gamepad2.left_stick_y)>0.08) {
-            leftLeftVer = -gamepad2.left_stick_y;
+            rightLeftVer = -gamepad2.left_stick_y;
         } else {
-            leftLeftVer = 0;
+            rightLeftVer = 0;
         }
 
         /*
@@ -137,7 +137,7 @@ public class TeleOp extends OpMode {
         /*
         Updates hang arm motor power
         */
-        hangSlideMotor.setPower(leftLeftVer);
+        hangSlideMotor.setPower(rightLeftVer);
         if (gamepad2.left_bumper) {
             hangSlideMotor.setPower(-100);
         } else if (gamepad2.right_bumper) {
