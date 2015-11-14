@@ -26,6 +26,8 @@ public class TeleOp extends OpMode {
     DcMotor rfMotor = hardwareMap.dcMotor.get("rfMotor");
     DcMotor rbMotor = hardwareMap.dcMotor.get("rbMotor");
     DcMotor armMotor = hardwareMap.dcMotor.get("armMotor");
+    DcMotor hangRotateMotor = hardwareMap.dcMotor.get("hangRotateMotor");
+    DcMotor hangSlideMotor = hardwareMap.dcMotor.get("hangSlideMotor");
 
     Servo zipBlue = hardwareMap.servo.get("zipBlue");
     Servo zipRed = hardwareMap.servo.get("zipRed");
@@ -53,12 +55,15 @@ public class TeleOp extends OpMode {
         /*
         Creates variables for gamepad input
         "Ver"=vertical
-        Creates variable for mode
+        Creates variable for speed mode
+        Creates variable for arm encoder control
         */
         float leftLeftVer;
         float leftRightVer;
         float rightRightVer;
+        float rightLeftVer;
         String mode;
+        boolean encoderMode = false;
 
         /*
         Updates the power variable from the sticks only if its absolute value is greater than 0.08
@@ -80,6 +85,12 @@ public class TeleOp extends OpMode {
             rightRightVer = -gamepad2.right_stick_y;
         } else {
             rightRightVer = 0;
+        }
+
+        if (abs(gamepad2.left_stick_y)>0.08) {
+            leftLeftVer = -gamepad2.left_stick_y;
+        } else {
+            leftLeftVer = 0;
         }
 
         /*
@@ -110,17 +121,33 @@ public class TeleOp extends OpMode {
         Updates arm motor power
         */
         if (rightRightVer != 0) {
+            encoderMode = false;
             armMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
             armMotor.setPower(rightRightVer);
         } else if (gamepad2.y) {
+            encoderMode = true;
             armMotor.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
             armMotor.setTargetPosition(ARM_UP_POSITION);
         } else if (gamepad2.a) {
+            encoderMode = true;
             armMotor.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
             armMotor.setTargetPosition(ARM_DOWN_POSITION);
+        } else if (rightRightVer == 0 && encoderMode == false) {
+            armMotor.setPower(0);
         }
         /*
-        Updates servo motor power
+        Updates hang arm motor power
+        */
+        hangSlideMotor.setPower(leftLeftVer);
+        if (gamepad2.left_bumper) {
+            hangSlideMotor.setPower(-100);
+        } else if (gamepad2.right_bumper) {
+            hangSlideMotor.setPower(100);
+        } else {
+            hangSlideMotor.setPower(0);
+        }
+        /*
+        Updates zip servo power
          */
         if (gamepad1.x) {
             zipBlue.setPosition(ZIP_DOWN_POSITION);
@@ -133,7 +160,9 @@ public class TeleOp extends OpMode {
         } else {
             zipRed.setPosition(ZIP_UP_POSITION);
         }
-
+        /*
+        Updates climber servo power
+         */
         if (gamepad2.x) {
             climber.setPosition(CLIMBER_DOWN_POSITION);
         } else if (gamepad2.b) {
