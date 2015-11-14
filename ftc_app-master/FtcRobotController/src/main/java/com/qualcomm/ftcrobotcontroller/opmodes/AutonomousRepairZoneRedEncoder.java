@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.ftcrobotcontroller.opmodes.BaseCode;
 
 /**
  * Created by rkhaj on 10/31/2015.
@@ -26,60 +27,8 @@ public class AutonomousRepairZoneRedEncoder extends LinearOpMode {
     public static final double CLIMBER_UP_POSITION = 0;
     public static final double CLIMBER_DOWN_POSITION = 0;
 
-    public void moveForward(double power, long time) throws InterruptedException{
-        lfMotor.setPower(power);
-        lbMotor.setPower(power);
-        rbMotor.setPower(power);
-        rfMotor.setPower(power);
-        sleep(time * 1000);
-        lfMotor.setPower(0);
-        lbMotor.setPower(0);
-        rbMotor.setPower(0);
-        rfMotor.setPower(0);
-        sleep(500);
-    }
+    BaseCode baseReference = new BaseCode();
 
-    public void turnRight(double power, long time) throws InterruptedException{
-        lfMotor.setPower(power);
-        lbMotor.setPower(power);
-        rbMotor.setPower(-power);
-        rfMotor.setPower(-power);
-        sleep(time * 1000);
-        lfMotor.setPower(0);
-        lbMotor.setPower(0);
-        rbMotor.setPower(0);
-        rfMotor.setPower(0);
-        sleep(500);
-    }
-
-    public void turnLeft(double power, long time) throws InterruptedException{
-        lfMotor.setPower(-power);
-        lbMotor.setPower(-power);
-        rbMotor.setPower(power);
-        rfMotor.setPower(power);
-        sleep(time * 1000);
-        lfMotor.setPower(0);
-        lbMotor.setPower(0);
-        rbMotor.setPower(0);
-        rfMotor.setPower(0);
-        sleep(500);
-    }
-
-    public void moveForwardEncoder(double power, double inches) {
-        double ticks = inches * 1220 / (4 * Math.PI);
-        byte direction=1;
-        if (power<0) {
-            direction = -1;
-        }
-        lfMotor.setTargetPosition(lfMotor.getCurrentPosition() + direction * (int) ticks);
-        lbMotor.setTargetPosition(lbMotor.getCurrentPosition() + direction * (int) ticks);
-        rfMotor.setTargetPosition(rfMotor.getCurrentPosition() + direction * (int) ticks);
-        rbMotor.setTargetPosition(rbMotor.getCurrentPosition() + direction * (int) ticks);
-        lfMotor.setPower(power);
-        lbMotor.setPower(power);
-        rfMotor.setPower(power);
-        rbMotor.setPower(power);
-    }
     @Override
     public void runOpMode() throws InterruptedException{
 
@@ -98,19 +47,19 @@ public class AutonomousRepairZoneRedEncoder extends LinearOpMode {
         waitOneFullHardwareCycle();
         waitForStart();
 
-        moveForwardEncoder(0.75, 60);
-        turnLeft(0.75, 1000);
-        moveForwardEncoder(0.75, 50);
-        turnLeft(0.75, 1000);
-        moveForwardEncoder(0.75, 12);
+        baseReference.moveForwardEncoder(0.75, 60);
+        baseReference.turnLeft(0.75, 1000);
+        baseReference.moveForwardEncoder(0.75, 50);
+        baseReference.turnLeft(0.75, 1000);
+        baseReference.moveForwardEncoder(0.75, 12);
         if (colorSensor.blue() < 100) {
-            turnRight(0.75, 500);
-            moveForward(0.5, 5);
-            turnLeft(0.75, 500);
+            baseReference.turnRight(0.75, 500);
+            baseReference.moveForward(0.5, 5);
+            baseReference.turnLeft(0.75, 500);
         }
-        moveForwardEncoder(0.25, 1);
+        baseReference.moveForwardEncoder(0.25, 1);
         sleep(250);
-        moveForwardEncoder(-0.25, 1);
+        baseReference.moveForwardEncoder(-0.25, 1);
         climber.setPosition(CLIMBER_DOWN_POSITION);
         sleep(1000);
         climber.setPosition(CLIMBER_UP_POSITION);

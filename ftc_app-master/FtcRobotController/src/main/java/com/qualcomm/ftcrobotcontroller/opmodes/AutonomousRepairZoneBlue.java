@@ -25,44 +25,8 @@ public class AutonomousRepairZoneBlue extends LinearOpMode {
     public static final double CLIMBER_UP_POSITION = 0;
     public static final double CLIMBER_DOWN_POSITION = 0;
 
-    public void moveForward(double power, long time) throws InterruptedException{
-        lfMotor.setPower(power);
-        lbMotor.setPower(power);
-        rbMotor.setPower(power);
-        rfMotor.setPower(power);
-        sleep(time * 1000);
-        lfMotor.setPower(0);
-        lbMotor.setPower(0);
-        rbMotor.setPower(0);
-        rfMotor.setPower(0);
-        sleep(500);
-    }
-
-    public void turnRight(double power, long time) throws InterruptedException{
-        lfMotor.setPower(power);
-        lbMotor.setPower(power);
-        rbMotor.setPower(-power);
-        rfMotor.setPower(-power);
-        sleep(time * 1000);
-        lfMotor.setPower(0);
-        lbMotor.setPower(0);
-        rbMotor.setPower(0);
-        rfMotor.setPower(0);
-        sleep(500);
-    }
-
-    public void turnLeft(double power, long time) throws InterruptedException{
-        lfMotor.setPower(-power);
-        lbMotor.setPower(-power);
-        rbMotor.setPower(power);
-        rfMotor.setPower(power);
-        sleep(time * 1000);
-        lfMotor.setPower(0);
-        lbMotor.setPower(0);
-        rbMotor.setPower(0);
-        rfMotor.setPower(0);
-        sleep(500);
-    }
+    BaseCode baseReference = new BaseCode();
+    
     @Override
     public void runOpMode() throws InterruptedException{
 
@@ -76,19 +40,19 @@ public class AutonomousRepairZoneBlue extends LinearOpMode {
         waitOneFullHardwareCycle();
         waitForStart();
 
-        moveForward(0.75, 1000);
-        turnRight(0.75, 1000);
-        moveForward(0.75, 1000);
-        turnRight(0.75, 1000);
-        moveForward(0.75, 1000);
+        baseReference.moveForward(0.75, 1000);
+        baseReference.turnRight(0.75, 1000);
+        baseReference.moveForward(0.75, 1000);
+        baseReference.turnRight(0.75, 1000);
+        baseReference.moveForward(0.75, 1000);
         if (colorSensor.blue() < 100) {
-            turnLeft(0.75, 500);
-            moveForward(0.25, 1000);
-            turnRight(0.75, 500);
+            baseReference.turnLeft(0.75, 500);
+            baseReference.moveForward(0.25, 1000);
+            baseReference.turnRight(0.75, 500);
         }
-        moveForward(0.25, 500);
+        baseReference.moveForward(0.25, 500);
         sleep(250);
-        moveForward(-0.25, 500);
+        baseReference.moveForward(-0.25, 500);
         climber.setPosition(CLIMBER_DOWN_POSITION);
         sleep(1000);
         climber.setPosition(CLIMBER_UP_POSITION);
