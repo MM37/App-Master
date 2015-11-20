@@ -35,7 +35,7 @@ public class AutonomousRepairZoneBlue extends LinearOpMode {
         rfMotor = hardwareMap.dcMotor.get("rfMotor");
         rbMotor = hardwareMap.dcMotor.get("rbMotor");
 
-        colorSensor = hardwareMap.colorSensor.get("colorSensor");
+        //colorSensor = hardwareMap.colorSensor.get("colorSensor");
 
         waitOneFullHardwareCycle();
         waitForStart();

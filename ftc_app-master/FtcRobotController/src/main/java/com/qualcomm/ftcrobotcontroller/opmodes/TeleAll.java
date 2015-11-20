@@ -17,7 +17,9 @@ public class TeleAll extends OpMode {
     DcMotor lbMotor;
     DcMotor rfMotor;
     DcMotor rbMotor;
-    DcMotor armMotor;
+    //DcMotor armMotor;
+    DcMotor hangRotateMotor;
+    DcMotor hangSlideMotor;
 
     /*creates Servo objects*/
     Servo  climber;
@@ -39,11 +41,13 @@ public class TeleAll extends OpMode {
         /* Assigns DcMotor objects to physical motors
             using Hardware Mapping
          */
-        lfMotor = hardwareMap.dcMotor.get("lfMotor");
         lbMotor = hardwareMap.dcMotor.get("lbMotor");
+        lfMotor = hardwareMap.dcMotor.get("lfMotor");
         rfMotor = hardwareMap.dcMotor.get("rfMotor");
         rbMotor = hardwareMap.dcMotor.get("rbMotor");
-        armMotor = hardwareMap.dcMotor.get("armMotor");
+        hangRotateMotor = hardwareMap.dcMotor.get("hangRotateMotor");
+        hangSlideMotor = hardwareMap.dcMotor.get("hangSlideMotor");
+        //armMotor = hardwareMap.dcMotor.get("armMotor");
 
         /* Assigns Servo objects to physical servos using
                Hardware Mapping
@@ -57,7 +61,7 @@ public class TeleAll extends OpMode {
     @Override
     public void loop(){
         /* variables to control motor power */
-        float rPwr, lPwr, armPwr;
+        float rPwr, lPwr, armPwr, rotatePwr, slidePwr;
 
         Boolean lBump; //status of left bumper on gamepad 1
         Boolean rBump; //status of right bumper on gamepad 1
@@ -80,6 +84,22 @@ public class TeleAll extends OpMode {
         } else {
             armPwr = 0;
         }
+
+        if (abs(gamepad2.left_stick_y)>0.08)
+            rotatePwr = (float) 0.6 * -gamepad2.left_stick_y;
+        else if (gamepad2.a)
+            rotatePwr = (float) 0.13;
+        else
+            rotatePwr = 0;
+
+        if (gamepad1.left_trigger == 1)
+            slidePwr = 1;
+        else if (gamepad1.right_trigger == 1)
+            slidePwr = -1;
+        else
+            slidePwr = 0;
+
+        telemetry.addData("right trigger", gamepad1.right_trigger);
 
         if (gamepad1.left_bumper)
             lBump=true;
@@ -110,7 +130,10 @@ public class TeleAll extends OpMode {
             rfMotor.setPower(rPwr);
             rbMotor.setPower(rPwr);
         }
-        armMotor.setPower(armPwr);
+        //armMotor.setPower(armPwr);
+
+        hangSlideMotor.setPower(slidePwr);
+        hangRotateMotor.setPower(rotatePwr);
 
         if(gamepad1.x)
             climber.setPosition(CLIMBER_UP_POSITION);
@@ -120,7 +143,7 @@ public class TeleAll extends OpMode {
 
         telemetry.addData("rightDrive: ", rfMotor.getPower());
         telemetry.addData("leftDrive: ", lfMotor.getPower());
-        telemetry.addData("arm: ", armMotor.getPower());
+        //telemetry.addData("arm: ", armMotor.getPower());
         telemetry.addData("climber: ", climber.getPosition());
 
 

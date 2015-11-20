@@ -1,25 +1,17 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.ftcrobotcontroller.opmodes.BaseCode;
 
 /**
- * Created by rkhaj on 11/13/2015.
+ * Created by rkhaj on 11/14/2015.
  */
-public class BaseCode extends LinearOpMode{
-    DcMotor lfMotor = hardwareMap.dcMotor.get("lfMotor");
-    DcMotor lbMotor = hardwareMap.dcMotor.get("lbMotor");
-    DcMotor rfMotor = hardwareMap.dcMotor.get("rfMotor");
-    DcMotor rbMotor = hardwareMap.dcMotor.get("rbMotor");
+public class AutonomousRamp extends LinearOpMode{
 
-
-    public BaseCode () {}
+    DcMotor lfMotor;
+    DcMotor lbMotor;
+    DcMotor rfMotor;
+    DcMotor rbMotor;
 
     public void moveForward(double power, long time) throws InterruptedException{
         lfMotor.setPower(power);
@@ -35,11 +27,11 @@ public class BaseCode extends LinearOpMode{
     }
 
     public void turnRight(double power, long time) throws InterruptedException{
-        lfMotor.setPower(power);
-        lbMotor.setPower(power);
-        rbMotor.setPower(-power);
-        rfMotor.setPower(-power);
-        sleep(time * 1000);
+        lfMotor.setPower(-power);
+        lbMotor.setPower(-power);
+        rbMotor.setPower(power);
+        rfMotor.setPower(power);
+        sleep(time);
         lfMotor.setPower(0);
         lbMotor.setPower(0);
         rbMotor.setPower(0);
@@ -78,7 +70,19 @@ public class BaseCode extends LinearOpMode{
 
     @Override
     public void runOpMode() throws InterruptedException {
+        lfMotor = hardwareMap.dcMotor.get("lfMotor");
+        lbMotor = hardwareMap.dcMotor.get("lbMotor");
+        rfMotor = hardwareMap.dcMotor.get("rfMotor");
+        rbMotor = hardwareMap.dcMotor.get("rbMotor");
+
         rbMotor.setDirection(DcMotor.Direction.REVERSE);
         lfMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        waitOneFullHardwareCycle();
+        waitForStart();
+
+        moveForward(0.75, 2);
+        turnRight(0.75, 1100);
+        moveForward(0.75, 2);
     }
 }
