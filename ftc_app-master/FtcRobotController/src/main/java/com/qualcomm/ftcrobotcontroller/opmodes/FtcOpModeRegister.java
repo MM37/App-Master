@@ -71,6 +71,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("BaseCode", BaseCode.class);
     manager.register("TeleAll", TeleAll.class);
     manager.register("EncoderTestRohan", EncoderTestRohan.class);
+    manager.register("Sahaj Encoder Test", EncoderTestSahaj.class);
 
     /*
      * Uncomment any of the following lines if you want to register an op mode.
