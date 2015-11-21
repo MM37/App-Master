@@ -12,7 +12,7 @@ public class EncoderTestSahaj extends OpMode {
     DcMotor lfMotor;
     DcMotor rfMotor;
 
-    final int TargetLf = -50, TargetRf = 50;
+    final int TARGETLF = -50, TARGETRF = 50;
 
 
     public EncoderTestSahaj(){
@@ -35,8 +35,8 @@ public class EncoderTestSahaj extends OpMode {
 
     @Override
     public void loop(){
-        lfMotor.setTargetPosition(TargetLf);
-        rfMotor.setTargetPosition(TargetRf);
+        lfMotor.setTargetPosition(TARGETLF);
+        rfMotor.setTargetPosition(TARGETRF);
 
         telemetry.clearData();
         telemetry.addData("TargetLeft: ", lfMotor.getTargetPosition());
