@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by rkhaj on 11/9//2015.
+ * Created by sahaj on 11/22/2015.
  */
-public class AutonomousRepairZoneBlueHard extends LinearOpMode {
+public class BlueAutonNoDrop extends LinearOpMode {
 
     DcMotor lfMotor;
     DcMotor lbMotor;
@@ -81,10 +81,10 @@ public class AutonomousRepairZoneBlueHard extends LinearOpMode {
         waitOneFullHardwareCycle();
         waitForStart();
 
-        moveForward(0.75, 3740);
+        moveForward(0.75, 3720);
         turnLeft(0.75, 450);
-        moveForward(0.75, 150);
-        climber.setPosition(CLIMBER_UP_POSITION);
+        moveForward(0.75, 50);
+
         /*turnRight(0.75, 1000);
         moveForward(0.75, 1000);
         if (colorSensor.blue() < 100) {
