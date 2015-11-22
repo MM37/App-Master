@@ -6,64 +6,64 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import static java.lang.Math.abs;
 
-
 /**
- * Created by rkhaj on 11/20/2015.
+ * Created by Sahaj on 11/21/2015.
  */
-public class TeleAll2 extends OpMode {
+public class TeleMeet extends OpMode {
 
-    /*creates DcMotor objects*/
+
+    /*Declares motors*/
     DcMotor lfMotor;
     DcMotor lbMotor;
     DcMotor rfMotor;
     DcMotor rbMotor;
+    DcMotor hangSlideMotor;
+    DcMotor hangRotateMotor;
     //DcMotor armMotor;
-    //DcMotor hangRotateMotor;
-    //DcMotor hangSlideMotor;
 
-    /*creates Servo objects*/
-    Servo  climber;
+    /*Declares servos*/
+    Servo climber;
     Servo rSwitch;
+    Servo lSwitch;
 
-    /*sets values for arm position*/
-    public static final int ARM_DOWN_POSITION = 50;
-    public static final int ARM_UP_POSITION = 100;
-
-    /*sets climber servo positions*/
+    /*Assigns constant values; !!!TO BE EDITED!!!*/
     public static final double CLIMBER_UP_POSITION = 0.7;
     public static final double CLIMBER_DOWN_POSITION = 0.0;
     public static final double RSWITCH_OPEN_POSITION = 0.25;
     public static final double RSWITCH_CLOSED_POSITION = 0.90;
-
-
-    public TeleAll2() {
-    }
+    public static final double LSWITCH_OPEN_POSITION = 0.25;
+    public static final double LSWITCH_CLOSED_POSITION = 0.90;
 
     @Override
     public void init(){
-        /* Assigns DcMotor objects to physical motors
-            using Hardware Mapping
-         */
+         /* Assigns DcMotor objects to physical motors
+            using Hardware Mapping */
         lbMotor = hardwareMap.dcMotor.get("lbMotor");
         lfMotor = hardwareMap.dcMotor.get("lfMotor");
         rfMotor = hardwareMap.dcMotor.get("rfMotor");
         rbMotor = hardwareMap.dcMotor.get("rbMotor");
-        //hangRotateMotor = hardwareMap.dcMotor.get("hangRotateMotor");
-        //hangSlideMotor = hardwareMap.dcMotor.get("hangSlideMotor");
+        hangRotateMotor = hardwareMap.dcMotor.get("hangRotateMotor");
+        hangSlideMotor = hardwareMap.dcMotor.get("hangSlideMotor");
         //armMotor = hardwareMap.dcMotor.get("armMotor");
 
-        /* Assigns Servo objects to physical servos using
-               Hardware Mapping
-        */
+         /* Assigns Servo objects to physical servos
+         using Hardware Mapping */
         climber = hardwareMap.servo.get("climber");
         rSwitch = hardwareMap.servo.get("rSwitch");
+        lSwitch = hardwareMap.servo.get("lSwitch");
 
-        rbMotor.setDirection(DcMotor.Direction.REVERSE);
-        lfMotor.setDirection(DcMotor.Direction.REVERSE);
+        /* resets Servo positions */
+        climber.setPosition(CLIMBER_DOWN_POSITION);
+        rSwitch.setPosition(RSWITCH_CLOSED_POSITION);
+        lSwitch.setPosition(LSWITCH_CLOSED_POSITION);
+
+        telemetry.addData("init complete", "");
     }
 
     @Override
     public void loop(){
+        telemetry.clearData();
+
         /* variables to control motor power */
         float rPwr, lPwr, armPwr, rotatePwr, slidePwr;
 
@@ -90,7 +90,7 @@ public class TeleAll2 extends OpMode {
         }
 
         if (abs(gamepad2.left_stick_y)>0.08)
-            rotatePwr = (float) 0.6 * -gamepad2.left_stick_y;
+            rotatePwr = (float) 0.50 * -gamepad2.left_stick_y;
         else if (gamepad2.a)
             rotatePwr = (float) 0.13;
         else
@@ -109,7 +109,12 @@ public class TeleAll2 extends OpMode {
             rSwitch.setPosition(RSWITCH_CLOSED_POSITION);
         }
 
-        telemetry.addData("right trigger", gamepad1.right_trigger);
+        if (gamepad2.left_trigger > 0) {
+            lSwitch.setPosition(LSWITCH_OPEN_POSITION);
+        } else {
+            lSwitch.setPosition(LSWITCH_CLOSED_POSITION);
+        }
+
 
         if (gamepad1.left_bumper)
             lBump=true;
@@ -140,10 +145,11 @@ public class TeleAll2 extends OpMode {
             rfMotor.setPower(rPwr);
             rbMotor.setPower(rPwr);
         }
+
         //armMotor.setPower(armPwr);
 
-        //hangSlideMotor.setPower(slidePwr);
-        //hangRotateMotor.setPower(rotatePwr);
+        hangSlideMotor.setPower(slidePwr);
+        hangRotateMotor.setPower(rotatePwr);
 
         if(gamepad1.x)
             climber.setPosition(CLIMBER_UP_POSITION);
@@ -157,12 +163,10 @@ public class TeleAll2 extends OpMode {
         telemetry.addData("climber: ", climber.getPosition());
         telemetry.addData("rSwitch position: ", rSwitch.getPosition());
 
-
     }
 
     @Override
     public void stop(){
+
     }
 }
-
-

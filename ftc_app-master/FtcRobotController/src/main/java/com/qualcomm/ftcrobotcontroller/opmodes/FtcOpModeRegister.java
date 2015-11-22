@@ -61,18 +61,19 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register ("PushBotAuto", PushBotAuto.class);
     manager.register ("PushBotManual", PushBotManual.class);
 
-    manager.register("TeleOp", TeleOp.class);
-    manager.register("AutonomousRepairZoneBlue", AutonomousRepairZoneBlue.class);
-    manager.register("AutonomousRepairZoneRed", AutonomousRepairZoneRed.class);
-    manager.register("AutonomousRepairZoneBlueEncoder", AutonomousRepairZoneBlueEncoder.class);
-    manager.register("AutonomousRepairZoneRedEncoder", AutonomousRepairZoneRedEncoder.class);
-    manager.register("AutonomousRepairZoneBlueHard", AutonomousRepairZoneBlueHard.class);
-    manager.register("Autonomous Ramp", AutonomousRamp.class);
-    manager.register("BaseCode", BaseCode.class);
+    //manager.register("TeleOp", TeleOp.class);
+    //manager.register("AutonomousRepairZoneBlue", AutonomousRepairZoneBlue.class);
+    //manager.register("AutonomousRepairZoneRed", AutonomousRepairZoneRed.class);
+    //manager.register("AutonomousRepairZoneBlueEncoder", AutonomousRepairZoneBlueEncoder.class);
+    //manager.register("AutonomousRepairZoneRedEncoder", AutonomousRepairZoneRedEncoder.class);
+    //manager.register("AutonomousRepairZoneBlueHard", AutonomousRepairZoneBlueHard.class);
+    //manager.register("Autonomous Ramp", AutonomousRamp.class);
+    //manager.register("BaseCode", BaseCode.class);
     manager.register("TeleAll", TeleAll.class);
     manager.register("EncoderTestRohan", EncoderTestRohan.class);
     manager.register("Sahaj Encoder Test", EncoderTestSahaj.class);
     manager.register("Tele All rSwitch", TeleAll2.class);
+    manager.register("TeleMeet", TeleMeet.class);
 
     /*
      * Uncomment any of the following lines if you want to register an op mode.
