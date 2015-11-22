@@ -31,8 +31,8 @@ public class TeleMeet extends OpMode {
     public static final double CLIMBER_DOWN_POSITION = 0.0;
     public static final double RSWITCH_OPEN_POSITION = 0.25;
     public static final double RSWITCH_CLOSED_POSITION = 0.90;
-    public static final double LSWITCH_OPEN_POSITION = 0.25;
-    public static final double LSWITCH_CLOSED_POSITION = 0.90;
+    public static final double LSWITCH_CLOSED_POSITION = 0.25;
+    public static final double LSWITCH_OPEN_POSITION = 0.90;
 
     @Override
     public void init(){
@@ -90,9 +90,9 @@ public class TeleMeet extends OpMode {
         }
 
         if (abs(gamepad2.left_stick_y)>0.08)
-            rotatePwr = (float) 0.50 * -gamepad2.left_stick_y;
+            rotatePwr = (float) 0.40 * -gamepad2.left_stick_y;
         else if (gamepad2.a)
-            rotatePwr = (float) 0.13;
+            rotatePwr = (float) 0.16;
         else
             rotatePwr = 0;
 
@@ -128,21 +128,21 @@ public class TeleMeet extends OpMode {
 
         /*assigns power based on lBump value */
         if(lBump && rBump){
-            lbMotor.setPower(0.30*lPwr);
+            lbMotor.setPower(-0.30*lPwr);
             lfMotor.setPower(0.30*lPwr);
-            rfMotor.setPower(0.30 * rPwr);
+            rfMotor.setPower(-0.30 * rPwr);
             rbMotor.setPower(0.30 * rPwr);
         }
         else if(lBump){
-            lbMotor.setPower(0.60*lPwr);
+            lbMotor.setPower(-0.60*lPwr);
             lfMotor.setPower(0.60*lPwr);
-            rfMotor.setPower(0.60*rPwr);
+            rfMotor.setPower(-0.60*rPwr);
             rbMotor.setPower(0.60*rPwr);
         }
         else{
-            lbMotor.setPower(lPwr);
+            lbMotor.setPower(-lPwr);
             lfMotor.setPower(lPwr);
-            rfMotor.setPower(rPwr);
+            rfMotor.setPower(-rPwr);
             rbMotor.setPower(rPwr);
         }
 
