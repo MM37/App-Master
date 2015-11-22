@@ -19,7 +19,7 @@ public class TeleMeet extends OpMode {
     DcMotor rbMotor;
     DcMotor hangSlideMotor;
     DcMotor hangRotateMotor;
-    //DcMotor armMotor;
+    DcMotor armMotor;
 
     /*Declares servos*/
     Servo climber;
@@ -44,7 +44,7 @@ public class TeleMeet extends OpMode {
         rbMotor = hardwareMap.dcMotor.get("rbMotor");
         hangRotateMotor = hardwareMap.dcMotor.get("hangRotateMotor");
         hangSlideMotor = hardwareMap.dcMotor.get("hangSlideMotor");
-        //armMotor = hardwareMap.dcMotor.get("armMotor");
+        armMotor = hardwareMap.dcMotor.get("armMotor");
 
          /* Assigns Servo objects to physical servos
          using Hardware Mapping */
@@ -90,9 +90,9 @@ public class TeleMeet extends OpMode {
         }
 
         if (abs(gamepad2.left_stick_y)>0.08)
-            rotatePwr = (float) 0.40 * -gamepad2.left_stick_y;
+            rotatePwr = (float) -0.40 * -gamepad2.left_stick_y;
         else if (gamepad2.a)
-            rotatePwr = (float) 0.16;
+            rotatePwr = (float) -0.16;
         else
             rotatePwr = 0;
 
@@ -146,20 +146,20 @@ public class TeleMeet extends OpMode {
             rbMotor.setPower(rPwr);
         }
 
-        //armMotor.setPower(armPwr);
+        armMotor.setPower(armPwr);
 
         hangSlideMotor.setPower(slidePwr);
         hangRotateMotor.setPower(rotatePwr);
 
         if(gamepad1.x)
             climber.setPosition(CLIMBER_UP_POSITION);
-        else
+        if(gamepad1.y)
             climber.setPosition(CLIMBER_DOWN_POSITION);
 
 
         telemetry.addData("rightDrive: ", rfMotor.getPower());
         telemetry.addData("leftDrive: ", lfMotor.getPower());
-        //telemetry.addData("arm: ", armMotor.getPower());
+        telemetry.addData("arm: ", armMotor.getPower());
         telemetry.addData("climber: ", climber.getPosition());
         telemetry.addData("rSwitch position: ", rSwitch.getPosition());
 
