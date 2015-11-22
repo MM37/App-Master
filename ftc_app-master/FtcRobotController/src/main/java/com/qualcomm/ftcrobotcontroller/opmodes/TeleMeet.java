@@ -90,7 +90,7 @@ public class TeleMeet extends OpMode {
         }
 
         if (abs(gamepad2.left_stick_y)>0.08)
-            rotatePwr = (float) 0.40 * -gamepad2.left_stick_y;
+            rotatePwr = (float) 0.70 * -gamepad2.left_stick_y;
         else if (gamepad2.a)
             rotatePwr = (float) 0.16;
         else
@@ -128,20 +128,20 @@ public class TeleMeet extends OpMode {
 
         /*assigns power based on lBump value */
         if(lBump && rBump){
-            lbMotor.setPower(-0.30*lPwr);
-            lfMotor.setPower(0.30*lPwr);
+            lbMotor.setPower(0.30*lPwr);
+            lfMotor.setPower(-0.30*lPwr);
             rfMotor.setPower(-0.30 * rPwr);
             rbMotor.setPower(0.30 * rPwr);
         }
         else if(lBump){
-            lbMotor.setPower(-0.60*lPwr);
-            lfMotor.setPower(0.60*lPwr);
+            lbMotor.setPower(0.60*lPwr);
+            lfMotor.setPower(-0.60*lPwr);
             rfMotor.setPower(-0.60*rPwr);
             rbMotor.setPower(0.60*rPwr);
         }
         else{
-            lbMotor.setPower(-lPwr);
-            lfMotor.setPower(lPwr);
+            lbMotor.setPower(lPwr);
+            lfMotor.setPower(-lPwr);
             rfMotor.setPower(-rPwr);
             rbMotor.setPower(rPwr);
         }
