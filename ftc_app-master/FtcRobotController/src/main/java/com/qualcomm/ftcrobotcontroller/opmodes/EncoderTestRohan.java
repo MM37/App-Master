@@ -58,10 +58,10 @@ public class EncoderTestRohan extends LinearOpMode {
 
         //moveForwardEncoder(0.75, 10);
 
-        lfMotor.setTargetPosition(50);
-        rfMotor.setTargetPosition(50);
+        lfMotor.setTargetPosition(500);
+        rfMotor.setTargetPosition(500);
 
-        telemetry.clearData();
+        //telemetry.clearData();
         telemetry.addData("Target", rfMotor.getTargetPosition());
 
         lfMotor.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
