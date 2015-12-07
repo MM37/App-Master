@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by rkhaj on 11/9//2015.
  */
-public class AutonomousRepairZoneBlueHard extends LinearOpMode {
+public class AutonomousRepairZoneRedHard extends LinearOpMode {
 
     DcMotor lfMotor;
     DcMotor lbMotor;
@@ -81,9 +81,9 @@ public class AutonomousRepairZoneBlueHard extends LinearOpMode {
         waitOneFullHardwareCycle();
         waitForStart();
 
-        moveForward(0.75, 3785);
-        turnLeft(0.75, 450);
-        moveForward(-0.75, 167);
+        moveForward(-0.75, 3785);
+        turnRight(0.75, 450);
+        moveForward(0.75, 950);
         climber.setPosition(CLIMBER_UP_POSITION);
         /*turnRight(0.75, 1000);
         moveForward(0.75, 1000);

@@ -9,7 +9,7 @@ import static java.lang.Math.abs;
 /**
  * Created by Sahaj on 11/21/2015.
  */
-public class TeleMeet extends OpMode {
+public class TeleMeet2 extends OpMode {
 
 
     /*Declares motors*/
@@ -57,6 +57,10 @@ public class TeleMeet extends OpMode {
         rSwitch.setPosition(RSWITCH_CLOSED_POSITION);
         lSwitch.setPosition(LSWITCH_CLOSED_POSITION);
 
+        /* runs backward motors in opposite direction */
+        lfMotor.setDirection(DcMotor.Direction.REVERSE);
+        lbMotor.setDirection(DcMotor.Direction.REVERSE );
+
         telemetry.addData("init complete", "");
     }
 
@@ -83,15 +87,15 @@ public class TeleMeet extends OpMode {
             rPwr = 0;
         }
 
-        if (abs(gamepad2.left_stick_y)>0.08) {
-            armPwr = (float) -0.2*gamepad2.left_stick_y;
+        if (abs(gamepad2.right_stick_y)>0.08) {
+            armPwr = (float)0.2*gamepad2.right_stick_y;
         } else {
             armPwr = 0;
         }
 
-        if (abs(gamepad2.right_stick_y)>0.08)
-            rotatePwr = (float) 0.45 * gamepad2.right_stick_y;
-         else if (gamepad2.right_bumper)
+        if (abs(gamepad2.left_stick_y)>0.08)
+            rotatePwr = (float) 0.40 * gamepad2.left_stick_y;
+        else if (gamepad2.a)
             rotatePwr = (float) -0.16;
         else
             rotatePwr = 0;
@@ -129,20 +133,20 @@ public class TeleMeet extends OpMode {
         /*assigns power based on lBump value */
         if(lBump && rBump){
             lbMotor.setPower(0.30*lPwr);
-            lfMotor.setPower(-0.30*lPwr);
-            rfMotor.setPower(-0.30 * rPwr);
+            lfMotor.setPower(0.30*lPwr);
+            rfMotor.setPower(0.30 * rPwr);
             rbMotor.setPower(0.30 * rPwr);
         }
         else if(lBump){
             lbMotor.setPower(0.60*lPwr);
-            lfMotor.setPower(-0.60*lPwr);
-            rfMotor.setPower(-0.60*rPwr);
+            lfMotor.setPower(0.60*lPwr);
+            rfMotor.setPower(0.60*rPwr);
             rbMotor.setPower(0.60*rPwr);
         }
         else{
             lbMotor.setPower(lPwr);
-            lfMotor.setPower(-lPwr);
-            rfMotor.setPower(-rPwr);
+            lfMotor.setPower(lPwr);
+            rfMotor.setPower(rPwr);
             rbMotor.setPower(rPwr);
         }
 
