@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by rkhaj on 11/14/2015.
@@ -12,6 +13,11 @@ public class AutonomousRampRed extends LinearOpMode{
     DcMotor lbMotor;
     DcMotor rfMotor;
     DcMotor rbMotor;
+    Servo lockServoLeft;
+    Servo lockServoRight;
+
+    public static final int LOCK_SERVO_LEFT_CLOSED_POSITION = 0;
+    public static final int LOCK_SERVO_RIGHT_CLOSED_POSITION = 0;
 
     public void moveForward(double power, long time) throws InterruptedException{
         lfMotor.setPower(power);
@@ -74,6 +80,8 @@ public class AutonomousRampRed extends LinearOpMode{
         lbMotor = hardwareMap.dcMotor.get("lbMotor");
         rfMotor = hardwareMap.dcMotor.get("rfMotor");
         rbMotor = hardwareMap.dcMotor.get("rbMotor");
+        lockServoLeft = hardwareMap.servo.get("lockServoLeft");
+        lockServoRight = hardwareMap.servo.get("lockServoRight");
 
         rbMotor.setDirection(DcMotor.Direction.REVERSE);
         lfMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -84,5 +92,7 @@ public class AutonomousRampRed extends LinearOpMode{
         moveForward(0.75, 2);
         turnRight(0.75, 1100);
         moveForward(0.75, 2);
+        lockServoLeft.setPosition(LOCK_SERVO_LEFT_CLOSED_POSITION);
+        lockServoRight.setPosition(LOCK_SERVO_RIGHT_CLOSED_POSITION);
     }
 }

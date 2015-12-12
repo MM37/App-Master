@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by rkhaj on 12/11/2015.
@@ -12,6 +13,11 @@ public class AutonomousRampBlue extends LinearOpMode{
     DcMotor lbMotor;
     DcMotor rfMotor;
     DcMotor rbMotor;
+    Servo lockServoLeft;
+    Servo lockServoRight;
+
+    public static final int LOCK_SERVO_LEFT_CLOSED_POSITION = 0;
+    public static final int LOCK_SERVO_RIGHT_CLOSED_POSITION = 0;
 
     public void moveForward(double power, long time) throws InterruptedException{
         lfMotor.setPower(power);
@@ -52,28 +58,14 @@ public class AutonomousRampBlue extends LinearOpMode{
         sleep(500);
     }
 
-    public void moveForwardEncoder(double power, double inches) {
-        double ticks = inches * 1220 / (4 * Math.PI);
-        byte direction=1;
-        if (power<0) {
-            direction = -1;
-        }
-        lfMotor.setTargetPosition(lfMotor.getCurrentPosition() + direction * (int) ticks);
-        lbMotor.setTargetPosition(lbMotor.getCurrentPosition() + direction * (int) ticks);
-        rfMotor.setTargetPosition(rfMotor.getCurrentPosition() + direction * (int) ticks);
-        rbMotor.setTargetPosition(rbMotor.getCurrentPosition() + direction * (int) ticks);
-        lfMotor.setPower(power);
-        lbMotor.setPower(power);
-        rfMotor.setPower(power);
-        rbMotor.setPower(power);
-    }
-
     @Override
     public void runOpMode() throws InterruptedException {
         lfMotor = hardwareMap.dcMotor.get("lfMotor");
         lbMotor = hardwareMap.dcMotor.get("lbMotor");
         rfMotor = hardwareMap.dcMotor.get("rfMotor");
         rbMotor = hardwareMap.dcMotor.get("rbMotor");
+        lockServoLeft = hardwareMap.servo.get("lockServoLeft");
+        lockServoRight = hardwareMap.servo.get("lockServoRight");
 
         rbMotor.setDirection(DcMotor.Direction.REVERSE);
         lfMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -84,5 +76,7 @@ public class AutonomousRampBlue extends LinearOpMode{
         moveForward(0.75, 2);
         turnLeft(0.75, 1100);
         moveForward(0.75, 2);
+        lockServoLeft.setPosition(LOCK_SERVO_LEFT_CLOSED_POSITION);
+        lockServoRight.setPosition(LOCK_SERVO_RIGHT_CLOSED_POSITION);
     }
 }

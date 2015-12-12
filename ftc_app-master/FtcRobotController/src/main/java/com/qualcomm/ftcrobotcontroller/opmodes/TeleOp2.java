@@ -2,9 +2,8 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
+
 import static java.lang.Math.abs;
 
 /**
@@ -40,7 +39,7 @@ public class TeleOp2 extends OpMode {
     public static final int CLIMBER_SERVO_OPEN_POSITION = 0;
     public static final int LOCK_SERVO_LEFT_CLOSED_POSITION = 0;
     public static final int LOCK_SERVO_LEFT_OPEN_POSITION = 0;
-    public static final int LOCK_SERVO_RIGHT_CLSOSED_POSITION = 0;
+    public static final int LOCK_SERVO_RIGHT_CLOSED_POSITION = 0;
     public static final int LOCK_SERVO_RIGHT_OPEN_POSITION = 0;
     public static final int DEPOSITING_FLAP_SERVO_LEFT_OPEN_POSITION = 0;
     public static final int DEPOSITING_FLAP_SERVO_LEFT_CLOSED_POSITION = 0;
@@ -149,7 +148,7 @@ public class TeleOp2 extends OpMode {
         */
         if (gamepad2.b) {
             lockServoLeft.setPosition(LOCK_SERVO_LEFT_CLOSED_POSITION);
-            lockServoRight.setPosition(LOCK_SERVO_RIGHT_CLSOSED_POSITION);
+            lockServoRight.setPosition(LOCK_SERVO_RIGHT_CLOSED_POSITION);
         } else if (gamepad2.x) {
             lockServoLeft.setPosition(LOCK_SERVO_LEFT_OPEN_POSITION);
             lockServoRight.setPosition(LOCK_SERVO_RIGHT_OPEN_POSITION);
