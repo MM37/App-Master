@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
- * Created by rkhaj on 11/14/2015.
+ * Created by rkhaj on 12/11/2015.
  */
-public class AutonomousRamp extends LinearOpMode{
+public class AutonomousRampBlue extends LinearOpMode{
 
     DcMotor lfMotor;
     DcMotor lbMotor;
@@ -82,7 +82,7 @@ public class AutonomousRamp extends LinearOpMode{
         waitForStart();
 
         moveForward(0.75, 2);
-        turnRight(0.75, 1100);
+        turnLeft(0.75, 1100);
         moveForward(0.75, 2);
     }
 }
