@@ -75,8 +75,16 @@ public class AutonomousRampBlue extends LinearOpMode{
 
         moveForward(0.75, 2);
         turnLeft(0.75, 1100);
-        moveForward(0.75, 2);
+        lfMotor.setPower(0.75);
+        lbMotor.setPower(0.75);
+        rbMotor.setPower(0.75);
+        rfMotor.setPower(0.75);
+        sleep(4000);
         lockServoLeft.setPosition(LOCK_SERVO_LEFT_CLOSED_POSITION);
         lockServoRight.setPosition(LOCK_SERVO_RIGHT_CLOSED_POSITION);
+        lfMotor.setPower(0);
+        lbMotor.setPower(0);
+        rbMotor.setPower(0);
+        rfMotor.setPower(0);
     }
 }

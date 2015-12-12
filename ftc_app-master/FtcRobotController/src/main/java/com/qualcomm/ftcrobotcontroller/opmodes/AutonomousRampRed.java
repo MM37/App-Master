@@ -58,22 +58,6 @@ public class AutonomousRampRed extends LinearOpMode{
         sleep(500);
     }
 
-    public void moveForwardEncoder(double power, double inches) {
-        double ticks = inches * 1220 / (4 * Math.PI);
-        byte direction=1;
-        if (power<0) {
-            direction = -1;
-        }
-        lfMotor.setTargetPosition(lfMotor.getCurrentPosition() + direction * (int) ticks);
-        lbMotor.setTargetPosition(lbMotor.getCurrentPosition() + direction * (int) ticks);
-        rfMotor.setTargetPosition(rfMotor.getCurrentPosition() + direction * (int) ticks);
-        rbMotor.setTargetPosition(rbMotor.getCurrentPosition() + direction * (int) ticks);
-        lfMotor.setPower(power);
-        lbMotor.setPower(power);
-        rfMotor.setPower(power);
-        rbMotor.setPower(power);
-    }
-
     @Override
     public void runOpMode() throws InterruptedException {
         lfMotor = hardwareMap.dcMotor.get("lfMotor");
@@ -91,8 +75,16 @@ public class AutonomousRampRed extends LinearOpMode{
 
         moveForward(0.75, 2);
         turnRight(0.75, 1100);
-        moveForward(0.75, 2);
+        lfMotor.setPower(0.75);
+        lbMotor.setPower(0.75);
+        rbMotor.setPower(0.75);
+        rfMotor.setPower(0.75);
+        sleep(4000);
         lockServoLeft.setPosition(LOCK_SERVO_LEFT_CLOSED_POSITION);
         lockServoRight.setPosition(LOCK_SERVO_RIGHT_CLOSED_POSITION);
+        lfMotor.setPower(0);
+        lbMotor.setPower(0);
+        rbMotor.setPower(0);
+        rfMotor.setPower(0);
     }
 }
