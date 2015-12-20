@@ -66,10 +66,10 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("AutonomousRepairZoneRed", AutonomousRepairZoneRed.class);
     //manager.register("AutonomousRepairZoneBlueEncoder", AutonomousRepairZoneBlueEncoder.class);
     //manager.register("AutonomousRepairZoneRedEncoder", AutonomousRepairZoneRedEncoder.class);
-    manager.register("AutonomousRepairZoneBlueHard", AutonomousRepairZoneBlueHard.class);
-    manager.register("AutonomousRepairZoneRedHard", AutonomousRepairZoneRedHard.class);
-    manager.register("No Drop Blue Auto", BlueAutonNoDrop.class);
-    //manager.register("Autonomous Ramp", AutonomousRamp.class);
+    //manager.register("AutonomousRepairZoneBlueHard", AutonomousRepairZoneBlueHard.class);
+    //manager.register("AutonomousRepairZoneRedHard", AutonomousRepairZoneRedHard.class);
+    //manager.register("No Drop Blue Auto", BlueAutonNoDrop.class);
+    //manager.register("Autonomous Ramp", AutonomousRampRed.class);
     //manager.register("BaseCode", BaseCode.class);
     //manager.register("TeleAll", TeleAll.class);
     //manager.register("EncoderTestRohan", EncoderTestRohan.class);
@@ -77,6 +77,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("Tele All rSwitch", TeleAll2.class);
     manager.register("TeleMeet", TeleMeet.class);
     manager.register("TeleOp2", TeleOp2.class);
+    manager.register("TeleOp2Qualifier", TeleOp2New.class);
+    manager.register("Qualifier Auton: ", AutonQualifier.class);
 
     /*
      * Uncomment any of the following lines if you want to register an op mode.

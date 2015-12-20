@@ -25,10 +25,11 @@ public class TeleOp2New extends OpMode {
     /*
     Declares servo variables
     */
-    Servo climberServo;
+    //Servo climberServo;
     Servo lockServos;                       //Y-splitter controls 2 servos simultaneously
     Servo rackServo;
     Servo depositingFlapServos;
+    Servo tiltServo;                        //tilts blocks to one side
 
 
 
@@ -36,13 +37,19 @@ public class TeleOp2New extends OpMode {
     /*
     Declares servo position variables
     */
-    public static final double CLIMBER_SERVO_CLOSED_POSITION = 0;
-    public static final double CLIMBER_SERVO_OPEN_POSITION = 0;
+    public static final double CLIMBER_SERVO_CLOSED_POSITION = 0.0;
+    public static final double CLIMBER_SERVO_OPEN_POSITION = 0.62;
     public static final double LOCK_SERVOS_CLOSED_POSITION = 0.99;
     public static final double LOCK_SERVOS_OPEN_POSITION = 0.40;
     public static final double DEPOSITING_FLAP_SERVO_OPEN_POSITION = 0;
-    public static final double DEPOSITING_FLAP_SERVO_CLOSED_POSITION = 0;
+    public static final double DEPOSITING_FLAP_SERVO_CLOSED_POSITION = 1.0;
+    public static final double TILT_SERVO_MIDDLE = 0.5;
+    public static final double TILT_SERVO_LEFT = 0.35;
+    public static final double TILT_SERVO_RIGHT = 0.65;
+
     public static Boolean onRamp = false;             //should be set to true when on ramp;
+
+
 
     public TeleOp2New() {}
 
@@ -67,11 +74,13 @@ public class TeleOp2New extends OpMode {
         //climberServo = hardwareMap.servo.get("climber");
         lockServos = hardwareMap.servo.get("lockServos");
         rackServo = hardwareMap.servo.get("rack");
-        //depositingFlapServos = hardwareMap.servo.get("depositFlaps");
+        depositingFlapServos = hardwareMap.servo.get("depositFlaps");
+        tiltServo = hardwareMap.servo.get("tilt");
 
         lockServos.setPosition(LOCK_SERVOS_CLOSED_POSITION);
-        //depositingFlapServos.setPosition(DEPOSITING_FLAP_SERVO_CLOSED_POSITION);
+        //depositingFlapServos.setPosition(0.50);
         rackServo.setPosition(0.5);
+        tiltServo.setPosition(TILT_SERVO_MIDDLE);
     }
 
     @Override
@@ -125,7 +134,7 @@ public class TeleOp2New extends OpMode {
 
 
         if (abs(gamepad2.left_stick_y)>0.08) {
-            bucketArmPwr = -gamepad2.right_stick_y;
+            bucketArmPwr = -gamepad2.left_stick_y/4;
         } else {
             bucketArmPwr = 0;
         }
@@ -160,9 +169,9 @@ public class TeleOp2New extends OpMode {
         /*
         Depositing Flap Servo assignment
         */
-       /*<--[DELETE TO ACTIVATE CODE] if (gamepad1.b)
+        if (gamepad1.b)
             depositingFlapServos.setPosition(DEPOSITING_FLAP_SERVO_OPEN_POSITION);
-        else
+        else if (gamepad1.x)
             depositingFlapServos.setPosition(DEPOSITING_FLAP_SERVO_CLOSED_POSITION);
 
         /*
@@ -178,7 +187,7 @@ public class TeleOp2New extends OpMode {
         /*
         Climber Servo assignment
         */
-        /*<--DELETE TO ACTIVATE CODE if (gamepad1.left_trigger > 0.3)
+        /*<--[REMOVE TO ACTIVATE CODE] if (gamepad1.left_trigger > 0.3)
             climberServo.setPosition(CLIMBER_SERVO_CLOSED_POSITION);
         else if (gamepad1.right_trigger > 0.3)
             climberServo.setPosition(CLIMBER_SERVO_OPEN_POSITION);
@@ -191,6 +200,16 @@ public class TeleOp2New extends OpMode {
         } else if (gamepad2.x) {
             lockServos.setPosition(LOCK_SERVOS_OPEN_POSITION);
         }
+
+        /*
+        Tilt Servo assignment
+         */
+        if (gamepad2.dpad_up)
+            tiltServo.setPosition(TILT_SERVO_MIDDLE);
+        else if (gamepad2.dpad_left)
+            tiltServo.setPosition(TILT_SERVO_LEFT);
+        else if (gamepad2.dpad_right)
+            tiltServo.setPosition(TILT_SERVO_RIGHT);
 
         /*
         *telemetry code will display output to user
@@ -206,6 +225,8 @@ public class TeleOp2New extends OpMode {
             telemetry.addData("Drive Mode: ", "onRamp");
         else
             telemetry.addData("Drive Mode: ", "ground");
+
+        telemetry.addData("Tilt Servo: ", tiltServo.getPosition());
     }
 
 

@@ -2,75 +2,55 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
+
 import static java.lang.Math.abs;
 
 /**
  * Created by rkhaj on 12/5/2015.
- * This is the teleop for the new robot (made beginning of December.)
+ * This is the teleop for the new robot (made beginning of Demeber.
  */
 public class TeleOp2 extends OpMode {
 
     /*
-    Declares motor variables
+    Declares motor variables and creates link to hardware destinations
     */
-    DcMotor lfMotor;
-    DcMotor lbMotor;
-    DcMotor rfMotor;
-    DcMotor rbMotor;
-    DcMotor bucketArmMotor;
-    DcMotor pulleyMotor1;
+    DcMotor lfMotor = hardwareMap.dcMotor.get("lfMotor");
+    DcMotor lbMotor = hardwareMap.dcMotor.get("lbMotor");
+    DcMotor rfMotor = hardwareMap.dcMotor.get("rfMotor");
+    DcMotor rbMotor = hardwareMap.dcMotor.get("rbMotor");
+    DcMotor bucketArmMotor = hardwareMap.dcMotor.get("bucketArmMotor");
+    DcMotor pulleyMotor1 = hardwareMap.dcMotor.get("pulleyMotor1");
+
     /*
-    Declares servo variables
+    Declares servo variables and creates link to hardware destinations
     */
-    Servo climberServo;
-    Servo lockServoLeft;
-    Servo lockServoRight;
-    Servo rackServo;
-    Servo depositingFlapServoLeft;
-    Servo depositingFlapServoRight;
-
-
+    Servo climberServo = hardwareMap.servo.get("climberServo");
+    Servo lockServoLeft = hardwareMap.servo.get("lockServoLeft");
+    Servo lockServoRight = hardwareMap.servo.get("lockServoRight");
+    Servo rackServo = hardwareMap.servo.get("rackServo");
+    Servo depositingFlapServoLeft = hardwareMap.servo.get("depositingFlapServoLeft");
+    Servo depositingFlapServoRight = hardwareMap.servo.get("depositingFlapServoRight");
 
     /*
     Declares servo position variables
     */
-    public static final double CLIMBER_SERVO_CLOSED_POSITION = 0;
-    public static final double CLIMBER_SERVO_OPEN_POSITION = 0;
-    public static final double LOCK_SERVO_LEFT_CLOSED_POSITION = 0.1;
-    public static final double LOCK_SERVO_LEFT_OPEN_POSITION = 0.8;
-    public static final double LOCK_SERVO_RIGHT_CLOSED_POSITION = 0.1;
-    public static final double LOCK_SERVO_RIGHT_OPEN_POSITION = 0.8;
-    public static final double DEPOSITING_FLAP_SERVO_LEFT_OPEN_POSITION = 0;
-    public static final double DEPOSITING_FLAP_SERVO_LEFT_CLOSED_POSITION = 0;
-    public static final double DEPOSITING_FLAP_SERVO_RIGHT_OPEN_POSITION = 0;
-    public static final double DEPOSITING_FLAP_SERVO_RIGHT_CLOSED_POSITION = 0;
+    public static final int CLIMBER_SERVO_CLOSED_POSITION = 0;
+    public static final int CLIMBER_SERVO_OPEN_POSITION = 0;
+    public static final int LOCK_SERVO_LEFT_CLOSED_POSITION = 0;
+    public static final int LOCK_SERVO_LEFT_OPEN_POSITION = 0;
+    public static final int LOCK_SERVO_RIGHT_CLOSED_POSITION = 0;
+    public static final int LOCK_SERVO_RIGHT_OPEN_POSITION = 0;
+    public static final int DEPOSITING_FLAP_SERVO_LEFT_OPEN_POSITION = 0;
+    public static final int DEPOSITING_FLAP_SERVO_LEFT_CLOSED_POSITION = 0;
+    public static final int DEPOSITING_FLAP_SERVO_RIGHT_OPEN_POSITION = 0;
+    public static final int DEPOSITING_FLAP_SERVO_RIGHT_CLOSED_POSITION = 0;
 
     public TeleOp2() {}
 
     @Override
-    public void init(){
-        /*
-        Links DC Motor objects to hardware locations
-         */
-        lfMotor = hardwareMap.dcMotor.get("lfMotor");
-        lbMotor = hardwareMap.dcMotor.get("lbMotor");
-        rfMotor = hardwareMap.dcMotor.get("rfMotor");
-        rbMotor = hardwareMap.dcMotor.get("rbMotor");
-        bucketArmMotor = hardwareMap.dcMotor.get("armMotor");
-        pulleyMotor1 = hardwareMap.dcMotor.get("pulley1");
+    public void init() {
 
-        /*
-        Links servo objects to hardware locations
-         */
-        //climberServo = hardwareMap.servo.get("climber");
-        lockServoLeft = hardwareMap.servo.get("lockLeft");
-        lockServoRight = hardwareMap.servo.get("lockRight");
-        //rackServo = hardwareMap.servo.get("rack");
-        //depositingFlapServoLeft = hardwareMap.servo.get("depositLeft");
-        //depositingFlapServoRight = hardwareMap.servo.get("depositRight");
     }
 
     @Override
@@ -135,7 +115,7 @@ public class TeleOp2 extends OpMode {
         /*
         Depositing Flap Servo assignment
         */
-       /*<--DELETE TO ACTIVATE CODE if (gamepad1.b)
+        if (gamepad1.b)
             depositingFlapServoRight.setPosition(DEPOSITING_FLAP_SERVO_RIGHT_OPEN_POSITION);
         else
             depositingFlapServoRight.setPosition(DEPOSITING_FLAP_SERVO_RIGHT_CLOSED_POSITION);
@@ -148,7 +128,7 @@ public class TeleOp2 extends OpMode {
         /*
         Rack & Pinion Servo assignment
         */
-       /*<--DELETE TO ACTIVATE CODE if (gamepad1.dpad_right)
+        if (gamepad1.dpad_right)
             rackServo.setPosition(1);
         else if (gamepad1.dpad_left)
             rackServo.setPosition(0);
@@ -158,7 +138,7 @@ public class TeleOp2 extends OpMode {
         /*
         Climber Servo assignment
         */
-        /*<--DELETE TO ACTIVATE CODE if (gamepad1.left_trigger > 0.3)
+        if (gamepad1.left_trigger > 0.3)
             climberServo.setPosition(CLIMBER_SERVO_CLOSED_POSITION);
         else if (gamepad1.right_trigger > 0.3)
             climberServo.setPosition(CLIMBER_SERVO_OPEN_POSITION);
